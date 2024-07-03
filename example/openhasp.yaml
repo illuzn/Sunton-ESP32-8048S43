@@ -1,0 +1,29 @@
+hallway_panel:
+  objects:
+    - obj: "p0b2"
+      properties:
+        "text": '{{ now().strftime("%A, %-d %B %Y") }}'
+    - obj: "p0b3"
+      properties:
+        "text": '{{ state_attr("weather.broadview", "temperature") }}°C'
+    - obj: "p0b4"
+      properties:
+        "text": '{{ now().strftime("%-I:%M%p") }}'
+    - obj: "p1b2"
+      properties:
+        "text": >
+          {{ now().strftime("%-I:%M%p") ~ "\n" }}
+          {{ now().strftime("%A, %-d %B %Y") }}
+    - obj: "p1b3"
+      properties:
+        "text": '{{ "\uE335 \uE335" }}'
+    - obj: "p2b1"
+      properties:
+        "text": '{{ "\U000F0335" if is_state("light.front_door", "off") else "\U000F06E8" | e }}'
+        "bg_color": '{{ "#555555" if is_state("light.front_door", "off") else "#FFFFFF" }}'
+        "text_color": '{{ "#AAAAAA" if is_state("light.front_door", "off") else "#FFFF00" }}'
+        "text_decor": 0
+      event:
+        "down":
+          - service: homeassistant.toggle
+            entity_id: "light.front_door"
